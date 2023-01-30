@@ -20,7 +20,7 @@ router.delete("/books/:bookId", authentication,authorisation,bookController.dele
 
 //REVIEW
 router.post("/books/:bookId/review", reviewController.createReviws)
-router.post("/books/:bookId/review/:reviewId", reviewController.updateReviews)
+router.put("/books/:bookId/review/:reviewId", reviewController.updateReviews)
 router.delete("/books/:bookId/review/:reviewId", reviewController.deleteReviews)
 
 router.all('/*',function(req,res){
