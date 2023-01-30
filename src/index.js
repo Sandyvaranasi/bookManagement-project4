@@ -4,8 +4,11 @@ const port = process.env.PORT || 3000;
 const route = require("./routes/route");
 mongoose.set("strictQuery", true);
 const app = express();
+const cors = require('cors');
 
 app.use(express.json());
+
+app.use(cors())
 
 mongoose
   .connect(
