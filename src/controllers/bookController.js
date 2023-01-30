@@ -209,7 +209,7 @@ const deleteBooks= async (req,res)=>{
 
     if(!mongoose.isValidObjectId(bookId)) return res.status(400).send({status:false, message:"Please enter valid bookId"})
 
-    let bookDelete= await bookModel.findOneAndUpdate({$and:[{_id:bookId},{isDeleted:false}]},{$set:{isDeleted:true}},{new:true})
+    let bookDelete= await bookModel.findOneAndUpdate({$and:[{_id:bookId},{isDeleted:false}]},{$set:{isDeleted:true,deletedAt:Date.now()}},{new:true})
     
     if(!bookDelete) return res.status(404).send({status:false, message:"Book not found for this ID"})
     
