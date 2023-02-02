@@ -99,7 +99,7 @@ const login = async function (req, res) {
         message: 'Success',
         data: {
             userToken: userToken,
-           // ...userTokenData
+            ...userTokenData
         }
     })
     } catch (error) {

@@ -4,7 +4,7 @@ const bookModel =require('../models/bookModel')
 
 const authentication = function (req, res, next) {
     try {
-        let token = req.headers['x-api-key']
+        let token = req.headers.token
 
         if (!token) return res.status(401).send({ status: false, message: "missing mandatory header" })
 

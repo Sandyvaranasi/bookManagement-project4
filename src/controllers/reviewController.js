@@ -13,6 +13,8 @@ const createReviws = async function (req, res) {
             return res.status(400).send({status:false,message:"Please send mandatory field"})
         }
 
+        if(!mongoose.isValidObjectId(req.params.bookId)) return res.status(400).send({status:false,message:"invalid bookId"})
+
         if (!req.body.bookId) {
             req.body.bookId = req.params.bookId
         }
@@ -22,7 +24,7 @@ const createReviws = async function (req, res) {
 
         let { bookId, reviewedBy, rating, review, reviewedAt } = req.body
 
-        if(!mongoose.isValidObjectId(bookId)) return res.status(404).send({status:false,message:"invalid bookId"})
+        if(!mongoose.isValidObjectId(req.body.bookId)) return res.status(400).send({status:false,message:"invalid bookId"})
         if (!reviewedBy) reviewedBy = 'Guest'
         //if (typeof (reviewedBy) != 'string') return res.status(400).send({ status: false, messsage: "wrong name format" })
        // if (!validators.validate(reviewedBy)) return res.status(400).send({ status: false, message: "invalid reviewser's name" })
@@ -56,8 +58,8 @@ const updateReviews = async function (req, res) {
         let bookId = req.params.bookId;
         let reviewId = req.params.reviewId;
 
-        if (!bookId || !mongoose.isValidObjectId(bookId)) return res.status(400).send({ status: false, message: "Please provide valid bookId" });
-        if (!reviewId || !mongoose.isValidObjectId(reviewId)) return res.status(400).send({ status: false, message: "Please provide valid reviewId" });
+        if (!mongoose.isValidObjectId(req.params.bookId)) return res.status(400).send({ status: false, message: "Please provide valid bookId" });
+        if (!mongoose.isValidObjectId(req.params.reviewId)) return res.status(400).send({ status: false, message: "Please provide valid reviewId" });
 
         let data = req.body;
   
