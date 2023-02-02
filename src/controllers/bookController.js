@@ -125,30 +125,30 @@ const getBooks=async(req, res)=>{
     let filter = {isDeleted:false}
 
     if (userId) {
-        if(!isValidObjectId(userId)) return res.status(400).send({status:false, message:"Please enter valid userId"})
+        if(!isValidObjectId(userId)) return res.status(404).send({status:false, message:"Please enter valid userId"})
 
         filter.userId = userId
     }
     
     if(category) {
-       // if(!validation.validate(category)) return res.status(400).send({status:false, message:"Please enter valid category"})
+        //if(!validation.validate(category)) return res.status(404).send({status:false, message:"Please enter valid category"})
 
         filter.category = category
     }
 
     if(subcategory) {
-       // if(!validation.validate(subcategory)) return res.status(400).send({status:false, message:"Please enter valid category"})
+       // if(!validation.validate(subcategory)) return res.status(404).send({status:false, message:"Please enter valid category"})
 
         filter.subcategory = subcategory
     }
 
-    let allBooks = await bookModel.find(filter).select({ISBN:0, subcategory:0, __V:0, createdAt:0, updatedAt:0}).sort({title:1})
+    let allBooks = await bookModel.find(filter).select({ISBN:0, subcategory:0, __v:0, createdAt:0, updatedAt:0,isDeleted:0}).sort({title:1})
 
     if (allBooks.length == 0) {
         return res.status(404).send({status:false, message:"No book exist in the collection"})
     }
 
-    return res.status(200).send({status:true, data:allBooks})
+    return res.status(200).send({status:true,message:"Success", data:allBooks})
 }
 
 const getBooksById = async function (req, res) {
@@ -194,7 +194,7 @@ const updateBooks = async(req, res)=>{
     }
 
     if (!isValidObjectId(bookId)) {
-        return res.status(400).send({status:false, msg:"please send valid id"})
+        return res.status(404).send({status:false, msg:"please send valid id"})
     }
 
     let data = req.body
@@ -248,7 +248,7 @@ if(typeof(data.releasedAt)!="string") {
         return res.status(404).send({status:false, msg:"The book does not exist"})
     }
 
-    return res.status(200).send({status:true, data:updateBook})
+    return res.status(200).send({status:true,message:"success", data:updateBook})
 
 }catch(err){
     return res.status(500).send({status:false, message:err.message})

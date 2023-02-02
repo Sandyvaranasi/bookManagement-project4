@@ -22,7 +22,7 @@ const createReviws = async function (req, res) {
 
         let { bookId, reviewedBy, rating, review, reviewedAt } = req.body
 
-
+        if(!mongoose.isValidObjectId(bookId)) return res.status(404).send({status:false,message:"invalid bookId"})
         if (!reviewedBy) reviewedBy = 'Guest'
         //if (typeof (reviewedBy) != 'string') return res.status(400).send({ status: false, messsage: "wrong name format" })
        // if (!validators.validate(reviewedBy)) return res.status(400).send({ status: false, message: "invalid reviewser's name" })
@@ -68,12 +68,12 @@ const updateReviews = async function (req, res) {
         // if (review) {
         //     if (review.trim() == "" || typeof (review) != "string") return res.status(400).send({ status: false, message: "invalid review input" });
         // }
-        if (rating) {
-            if (typeof (rating) != "number" || rating < 1 || rating > 5) return res.status(400).send({ status: false, message: "invalid rating input, must be between 1 to 5" });
-        }
-        if (reviewedBy) {
-            if (typeof (reviewedBy) != "string" || reviewedBy.trim() == "" || !validators.validate(reviewedBy)) return res.status(400).send({ status: false, message: "invalid reviewedBy input" });
-        }
+        // if (rating) {
+        //     if (typeof (rating) != "number" || rating < 1 || rating > 5) return res.status(400).send({ status: false, message: "invalid rating input, must be between 1 to 5" });
+        // }
+        // if (reviewedBy) {
+        //     if (typeof (reviewedBy) != "string" || reviewedBy.trim() == "" || !validators.validate(reviewedBy)) return res.status(400).send({ status: false, message: "invalid reviewedBy input" });
+        // }
 
         let bookData = await bookModel.findOne({ _id: bookId, isDeleted: false });
         if (!bookData) return res.status(404).send({ status: false, message: "no such book" });

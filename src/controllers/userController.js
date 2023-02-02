@@ -1,5 +1,5 @@
 const userModel = require('../models/userModel.js');
-//const validation = require("../validations/validation")
+const validation = require("../validations/validation")
 const jwt = require('jsonwebtoken')
 //const mongoose=require('mongoose')
 
@@ -20,19 +20,20 @@ const createUser = async function (req, res) {
         //if (typeof (userData.name) !== 'string') return res.status(400).send({ status: false, message: "wrong format of name" })
         //if (!validation.validate(userData.name.trim())) return res.status(400).send({ status: false, message: "invalid name" })
 
-        userData.phone.trim()
+        // userData.phone.trim()
         if (!userData.phone) return res.status(400).send({ status: false, message: "phone is mandatory" })
         //if (typeof (userData.phone) !== "string") return res.status(400).send({ status: false, message: "wrong format of phone" })
         //if (!validation.validatePhone(userData.phone)) return res.status(400).send({ status: false, message: "invalid phone number" })
 
-        userData.email.trim()
+        // userData.email.trim()
         if (!userData.email) return res.status(400).send({ status: false, message: "email is mandatory" })
         //if (typeof (userData.email) !== "string") return res.status(400).send({ status: false, message: "wrong format of email" })
-        //if (!validation.validateEmail(userData.email)) return res.status(400).send({ status: false, message: "invalid email address" })
+        if (!validation.validateEmail(userData.email)) return res.status(400).send({ status: false, message: "invalid email address" })
 
         if (!userData.password) return res.status(400).send({ status: false, message: "password is mandatory" })
         //if (typeof (userData.password) !== "string") return res.status(400).send({ status: false, message: "wrong format of password" })
         //if (!validation.validatePassword(userData.password)) return res.status(400).send({ status: false, message: "Please send  8 to 15 length Alphanumeric with one Special Character Password" })
+        if(userData.password.length<8||userData.password.length>15) return res.status(400).send({ status: false, message: "Please send  8 to 15 length Alphanumeric with one Special Character Password" })
 
         if (userData.address) {
             if (typeof (userData.address) !== 'object') return res.status(400).send({ status: false, message: "wrong address format" })
@@ -98,7 +99,7 @@ const login = async function (req, res) {
         message: 'Success',
         data: {
             userToken: userToken,
-            ...userTokenData
+           // ...userTokenData
         }
     })
     } catch (error) {
