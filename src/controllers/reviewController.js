@@ -24,16 +24,16 @@ const createReviws = async function (req, res) {
 
 
         if (!reviewedBy) reviewedBy = 'Guest'
-        if (typeof (reviewedBy) != 'string') return res.status(400).send({ status: false, messsage: "wrong name format" })
-        if (!validators.validate(reviewedBy)) return res.status(400).send({ status: false, message: "invalid reviewser's name" })
+        //if (typeof (reviewedBy) != 'string') return res.status(400).send({ status: false, messsage: "wrong name format" })
+       // if (!validators.validate(reviewedBy)) return res.status(400).send({ status: false, message: "invalid reviewser's name" })
 
         if (!rating) return res.status(400).send({ status: false, message: "rating is mandatory" })
-        if (typeof (rating) != 'number') return res.status(400).send({ status: false, messsage: "wrong rating format" })
+        //if (typeof (rating) != 'number') return res.status(400).send({ status: false, messsage: "wrong rating format" })
         if (rating < 1 || rating > 5) return res.status(400).send({ status: false, message: "rating should be from 1 to 5" })
 
-        if (review) {
-            if (typeof (review) != 'string') return res.status(400).send({ status: false, messsage: "wrong review format" })
-        }
+        // if (review) {
+        //     if (typeof (review) != 'string') return res.status(400).send({ status: false, messsage: "wrong review format" })
+        // }
 
         let book = await bookModel.findOneAndUpdate({ _id: bookId, isDeleted: false }, { $inc: { reviews: 1 } }, { new: true });
 
@@ -65,9 +65,9 @@ const updateReviews = async function (req, res) {
 
         if (Object.keys(data).length == 0) return res.status(400).send({ status: false, message: "provide some data to update" });
 
-        if (review) {
-            if (review.trim() == "" || typeof (review) != "string") return res.status(400).send({ status: false, message: "invalid review input" });
-        }
+        // if (review) {
+        //     if (review.trim() == "" || typeof (review) != "string") return res.status(400).send({ status: false, message: "invalid review input" });
+        // }
         if (rating) {
             if (typeof (rating) != "number" || rating < 1 || rating > 5) return res.status(400).send({ status: false, message: "invalid rating input, must be between 1 to 5" });
         }

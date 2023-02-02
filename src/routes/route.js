@@ -11,8 +11,8 @@ router.post("/login", userController.login)
 
 //books
 
-router.post("/aws", bookController.awsUrl)
-router.post("/books", bookController.createBooks)
+//router.post("/aws", bookController.awsUrl)
+router.post("/books",authentication, bookController.createBooks)
 router.get("/books",authentication, bookController.getBooks)
 router.get("/books/:bookId",authentication, bookController.getBooksById)
 
